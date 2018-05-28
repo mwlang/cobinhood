@@ -135,111 +135,165 @@ where there would otherwise be name clashes/overloading.
 
 #### System Endpoints
 ----
-name: time
+```ruby
+time
+```
 * required params: none
 ----
-name: info
+```ruby
+info
+```
 * required params: none
 
 #### Market Endpoints
 ----
-name: currencies
+```ruby
+currencies
+```
 * alias: get_all_currencies
 * required params: none
 ----
-name: trading_pairs
+```ruby
+trading_pairs
+```
 * alias: get_all_trading_pairs
 * required params: none
 ----
-name: order_book trading_pair_id
+```ruby
+order_book trading_pair_id
+```
 * alias: get_order_book
 * required params: trading_pair_id
 ----
-name: precisions trading_pair_id
+```ruby
+precisions trading_pair_id
+```
 * alias: get_order_book_precisions
 * required params: trading_pair_id
 ----
-name: stats
+```ruby
+stats
+```
 * required params: none
 ----
-name: tickers trading_pair_id
+```ruby
+tickers trading_pair_id
+```
 * alias: get_ticker
 * required params: none
 ----
-name: market_trades trading_pair_id
+```ruby
+market_trades trading_pair_id
+```
 * alias: get_recent_trades
 * required params: none
 
 #### Chart Endpoints
 ----
-name: candles trading_pair_id, options={}
+```ruby
+candles trading_pair_id, options={}
+```
 * required params: trading_pair_id, timeframe
 
 #### Trading Endpoints
 ----
-name: order order_id
+```ruby
+order order_id
+```
 * alias: get_order
 * required params: order_id
 ----
-name: order_trades order_id
+```ruby
+order_trades order_id
+```
 * alias: get_trades_of_an_order
 * required params: order_id
 ----
-name: orders
+```ruby
+orders
+```
 * alias: get_all_orders
 * required params: none
 ----
-name: place_order trading_pair_id, options={}
+```ruby
+place_order trading_pair_id, options={}
+  ```
 * required params: side, type, size, price (except market orders)
 ----
-name: modify_order order_id, options={}
+```ruby
+modify_order order_id, options={}
+```
 * required params: order_id, size, price
 ----
-name: cancel_order order_id
+```ruby
+cancel_order order_id
+```
 * required params: order_id
 ----
-name: order_history trading_pair_id=nil, options={}
+```ruby
+order_history trading_pair_id=nil, options={}
+```
 * alias: get_order_history
 * required params: none
 ----
-name: get_trade trade_id
+```ruby
+get_trade trade_id
+```
 * alias: trade
 * required params: trade_id
 ----
-name: trades trading_pair_id, options={}
+```ruby
+trades trading_pair_id, options={}
+```
 * required params: trading_pair_id
 
 #### Wallet Endpoints
 ----
-name: balances
+```ruby
+balances
+```
 * alias: get_wallet_balances
 * required params: none
 ----
-name: ledger
+```ruby
+ledger
+```
 * alias: get_ledger_entries
 * required params: none
 ----
-name: deposit_addresses
+```ruby
+deposit_addresses
+```
 * alias: get_deposit_addresses
 * required params: none
 ----
-name: withdrawal_addresses
+```ruby
+withdrawal_addresses
+```
 * alias: get_withdrawal_addresses
 * required params: none
 ----
-name: withdrawal withdrawal_id
+```ruby
+withdrawal withdrawal_id
+```
 * alias: get_withdrawal
 * required params: withdrawal_id
 ----
-name: withdrawals
+```ruby
+withdrawals
+```
 * alias: get_all_withdrawals
 * required params: none
 ----
-name: deposit deposit_id
+```ruby
+deposit deposit_id
+```
 * alias: get_deposit
 * required params: deposit_id
 ----
-name: deposits
+```ruby
+deposits
+```
 * alias: get_all_deposits
 * required params: none
 
