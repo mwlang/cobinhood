@@ -62,7 +62,7 @@ Create a new instance of the REST Client:
 client = Cobinhood::Client::REST.new
 
 # Otherwise provide an api_key as keyword arguments
-client = Cobinhood::Client::REST.new api_key: 'x'
+client = Cobinhood::Client::REST.new api_key: 'your.api_key'
 ```
 
 ALTERNATIVELY, set your API key in exported environment variable:
@@ -243,7 +243,7 @@ name: deposits
 * alias: get_all_deposits
 * required params: none
 
-#### WebSocket Client
+### WebSocket Client
 
 * COMING SOON!
 
