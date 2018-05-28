@@ -144,31 +144,30 @@ name: info
 #### Market Endpoints
 
 name: currencies
-alias: get_all_currencies
+* alias: get_all_currencies
 * required params: none
 
 name: trading_pairs
-alias: get_all_trading_pairs
+* alias: get_all_trading_pairs
 * required params: none
 
 name: order_book trading_pair_id
-alias: get_order_book
+* alias: get_order_book
 * required params: trading_pair_id
 
 name: precisions trading_pair_id
-alias: get_order_book_precisions
+* alias: get_order_book_precisions
 * required params: trading_pair_id
 
 name: stats
 * required params: none
 
 name: tickers trading_pair_id
-alias: get_ticker
+* alias: get_ticker
 * required params: none
 
-alias : :market_trades
 name: market_trades trading_pair_id
-alias: get_recent_trades
+* alias: get_recent_trades
 * required params: none
 
 #### Chart Endpoints
@@ -179,15 +178,15 @@ name: candles trading_pair_id, options={}
 #### Trading Endpoints
 
 name: order order_id
-alias: get_order
+* alias: get_order
 * required params: order_id
 
 name: order_trades order_id
-alias: get_trades_of_an_order
+* alias: get_trades_of_an_order
 * required params: order_id
 
 name: orders
-alias: get_all_orders
+* alias: get_all_orders
 * required params: none
 
 name: place_order trading_pair_id, options={}
@@ -200,11 +199,11 @@ name: cancel_order order_id
 * required params: order_id
 
 name: order_history trading_pair_id=nil, options={}
-alias: get_order_history
+* alias: get_order_history
 * required params: none
 
 name: get_trade trade_id
-alias: trade
+* alias: trade
 * required params: trade_id
 
 name: trades trading_pair_id, options={}
@@ -213,35 +212,35 @@ name: trades trading_pair_id, options={}
 #### Wallet Endpoints
 
 name: balances
-alias: get_wallet_balances
+* alias: get_wallet_balances
 * required params: none
 
 name: ledger
-alias: get_ledger_entries
+* alias: get_ledger_entries
 * required params: none
 
 name: deposit_addresses
-alias: get_deposit_addresses
+* alias: get_deposit_addresses
 * required params: none
 
 name: withdrawal_addresses
-alias: get_withdrawal_addresses
+* alias: get_withdrawal_addresses
 * required params: none
 
 name: withdrawal withdrawal_id
-alias: get_withdrawal
+* alias: get_withdrawal
 * required params: withdrawal_id
 
 name: withdrawals
-alias: get_all_withdrawals
+* alias: get_all_withdrawals
 * required params: none
 
 name: deposit deposit_id
-alias: get_deposit
+* alias: get_deposit
 * required params: deposit_id
 
 name: deposits
-alias: get_all_deposits
+* alias: get_all_deposits
 * required params: none
 
 #### WebSocket Client
