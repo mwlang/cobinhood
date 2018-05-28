@@ -134,83 +134,83 @@ of the endpoint's URL and alias method follows the title/name given in Cobinhood
 where there would otherwise be name clashes/overloading.
 
 #### System Endpoints
-
+----
 name: time
 * required params: none
-
+----
 name: info
 * required params: none
 
 #### Market Endpoints
-
+----
 name: currencies
 * alias: get_all_currencies
 * required params: none
-
+----
 name: trading_pairs
 * alias: get_all_trading_pairs
 * required params: none
-
+----
 name: order_book trading_pair_id
 * alias: get_order_book
 * required params: trading_pair_id
-
+----
 name: precisions trading_pair_id
 * alias: get_order_book_precisions
 * required params: trading_pair_id
-
+----
 name: stats
 * required params: none
-
+----
 name: tickers trading_pair_id
 * alias: get_ticker
 * required params: none
-
+----
 name: market_trades trading_pair_id
 * alias: get_recent_trades
 * required params: none
 
 #### Chart Endpoints
-
+----
 name: candles trading_pair_id, options={}
 * required params: trading_pair_id, timeframe
 
 #### Trading Endpoints
-
+----
 name: order order_id
 * alias: get_order
 * required params: order_id
-
+----
 name: order_trades order_id
 * alias: get_trades_of_an_order
 * required params: order_id
-
+----
 name: orders
 * alias: get_all_orders
 * required params: none
-
+----
 name: place_order trading_pair_id, options={}
 * required params: side, type, size, price (except market orders)
-
+----
 name: modify_order order_id, options={}
 * required params: order_id, size, price
-
+----
 name: cancel_order order_id
 * required params: order_id
-
+----
 name: order_history trading_pair_id=nil, options={}
 * alias: get_order_history
 * required params: none
-
+----
 name: get_trade trade_id
 * alias: trade
 * required params: trade_id
-
+----
 name: trades trading_pair_id, options={}
 * required params: trading_pair_id
 
 #### Wallet Endpoints
-
+----
 name: balances
 * alias: get_wallet_balances
 * required params: none
