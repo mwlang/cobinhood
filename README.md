@@ -214,31 +214,31 @@ name: trades trading_pair_id, options={}
 name: balances
 * alias: get_wallet_balances
 * required params: none
-
+----
 name: ledger
 * alias: get_ledger_entries
 * required params: none
-
+----
 name: deposit_addresses
 * alias: get_deposit_addresses
 * required params: none
-
+----
 name: withdrawal_addresses
 * alias: get_withdrawal_addresses
 * required params: none
-
+----
 name: withdrawal withdrawal_id
 * alias: get_withdrawal
 * required params: withdrawal_id
-
+----
 name: withdrawals
 * alias: get_all_withdrawals
 * required params: none
-
+----
 name: deposit deposit_id
 * alias: get_deposit
 * required params: deposit_id
-
+----
 name: deposits
 * alias: get_all_deposits
 * required params: none
