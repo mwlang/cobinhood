@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'rest/api_endpoints'
 require_relative 'rest/nonce_request_middleware'
 require_relative 'rest/auth_request_middleware'
@@ -9,10 +10,10 @@ require_relative 'rest/trading_api'
 require_relative 'rest/wallet_api'
 
 module Cobinhood
-  MissingParamError = Class.new(Exception)
-  InvalidParamError = Class.new(Exception)
-  MissingApiKeyError = Class.new(Exception)
-  ClientError = Class.new(Exception)
+  MissingParamError = Class.new(StandardError)
+  InvalidParamError = Class.new(StandardError)
+  MissingApiKeyError = Class.new(StandardError)
+  ClientError = Class.new(StandardError)
 
   module Client
     # Public: Client with methods mirroring the Cobinhood REST APIs
@@ -62,7 +63,7 @@ module Cobinhood
       def public_client adapter
         Faraday.new(url: BASE_URL) do |conn|
           conn.request :json
-          conn.response :json, content_type: /\bjson$/
+          conn.response :json, content_type: /\bjson\z/
           conn.use NonceRequestMiddleware
           conn.adapter adapter
         end
@@ -71,7 +72,7 @@ module Cobinhood
       def auth_client api_key, adapter
         Faraday.new(url: BASE_URL) do |conn|
           conn.request :json
-          conn.response :json, content_type: /\bjson$/
+          conn.response :json, content_type: /\bjson\z/
           conn.use NonceRequestMiddleware
           conn.use AuthRequestMiddleware, api_key
           conn.adapter adapter
@@ -91,13 +92,13 @@ module Cobinhood
       #           Each endpoint will have their own required and optional
       #           params.
       def request api, method, endpoint, options = {}
-        response = @library[api].send(method) do |req|
+        response = @library[api].public_send(method) do |req|
 
           # substitute path parameters and remove from options hash
           endpoint_url = API_ENDPOINTS[api][endpoint].dup
           options.each do |option, value|
-            path_param = Regexp.new(":#{option}")
-            if endpoint_url =~ path_param
+            path_param = /":#{option}"/
+            if endpoint_url match? path_param
               options.delete(option)
               endpoint_url.gsub!(path_param, value)
             end

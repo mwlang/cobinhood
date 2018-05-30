@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Cobinhood
   module Client
     class REST
@@ -7,17 +8,17 @@ module Cobinhood
         def order order_id
           request :trading, :get, :order, order_id: order_id
         end
-        alias :get_order :order
+        alias get_order order
 
         def order_trades order_id
           request :trading, :get, :order_trades, order_id: order_id
         end
-        alias :get_trades_of_an_order :order_trades
+        alias get_trades_of_an_order order_trades
 
         def orders
           request :trading, :get, :orders
         end
-        alias :get_all_orders :orders
+        alias get_all_orders orders
 
         def place_order trading_pair_id, options={}
           assert_required_param options, :side, sides
@@ -41,12 +42,12 @@ module Cobinhood
           options.merge!(trading_pair_id: trading_pair_id) unless trading_pair_id.nil?
           request :trading, :get, :order_history, options
         end
-        alias :get_order_history :order_history
+        alias get_order_history order_history
 
         def get_trade trade_id
           request :trading, :get, :get_trade, options.merge(trade_id: trade_id)
         end
-        alias :trade :get_trade
+        alias trade get_trade
 
         def trades trading_pair_id, options={}
           request :trading, :get, :trades, options.merge(trading_pair_id: trading_pair_id)
