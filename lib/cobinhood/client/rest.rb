@@ -27,17 +27,13 @@ module Cobinhood
       include TradingAPI
       include WalletAPI
 
-      def default_api_key
-        ENV["COBINHOOD_API_KEY"].to_s
-      end
-
       # Public: Initialize a REST Client
       #
       # :api_key    - The String API key to authenticate (Default = '').
       #
       # :adapter    - The Faraday::Adapter to be used for the client
       #               (Default = Faraday.default_adapter).
-      def initialize api_key: default_api_key, adapter: Faraday.default_adapter
+      def initialize api_key: Cobinhood.default_api_key, adapter: Faraday.default_adapter
 
         @library = {
             system: public_client(adapter),

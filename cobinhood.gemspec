@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Michael Lang"]
   s.email       = ["mwlang@cybrains.net"]
   s.homepage    = "https://github.com/mwlang/cobinhood"
-  s.summary     = "Implements Cobinhood API"
+  s.summary     = "Implements Cobinhood API and Websocket"
   s.description = s.summary
   s.license     = "MIT"
 
@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'faraday', '~> 0.12'
   s.add_runtime_dependency 'faraday_middleware', '~> 0.12'
+  s.add_runtime_dependency 'faye-websocket', '~> 0.10'
 end

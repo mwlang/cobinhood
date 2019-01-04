@@ -1,2 +1,10 @@
 /pkg
 Gemfile.lock
+
+
+# rubymine config
+.idea
+
+# rvm
+.ruby-gemset
+.ruby-version
