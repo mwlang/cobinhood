@@ -6,7 +6,7 @@ This is an unofficial Ruby wrapper for the Cobinhood exchange REST and WebSocket
 
 * This is Alpha software.  All issues should be aggressively reported for quick resolution!
 * RESTful interface is fully implemented.
-* Websocket is *not* done.
+* Websocket interface is fully implemented.
 * Pull Requests are very welcome!
 
 ## Installation
@@ -35,12 +35,12 @@ Or install it yourself as:
   * No need to generate timestamps
   * No need to generate signatures
 
-#### Planned
-
 * Basic implementation of WebSocket API
   * Pass procs or lambdas to event handlers
   * Single and multiple streams supported
   * Runs on EventMachine
+
+#### Planned
 
 * Exception handling with responses
 * High level abstraction
@@ -299,7 +299,128 @@ deposits
 
 ### WebSocket Client
 
-* COMING SOON!
+
+Create a new instance of the WebSocket Client:
+
+```ruby
+# If you only plan on subscribing public topics, you can forgo any arguments
+client = Cobinhood::Client::Websocket.new
+
+# Otherwise provide an api_key as keyword arguments
+client = Cobinhood::Client::Websocket.new api_key: 'your.api_key'
+```
+
+ALTERNATIVELY, set your API key in exported environment variable:
+
+```bash
+export COBINHOOD_API_KEY=your.api_key
+```
+
+Subscribe various topics:
+
+```ruby
+# Candle
+methods = { message: proc { |event| puts event.data } }
+client.candle(trading_pair_id: 'COB-ETH', timeframe: '1m', methods: methods)
+  # => {"h":["candle.COB-ETH.1m","2","subscribed"],"d":[]}
+  # => {"h":["candle.COB-ETH.1m","2","s"],"d":[[...], ...]}
+```
+
+All subscription topic method will expect "methods" in argument(As shown above).
+It's The Hash which contains the event handler methods to pass to the WebSocket client methods.
+Proc is the expected value of each event handler key. Following are list of expected event handler keys.
+  - :open    - The Proc called when a stream is opened (optional)
+  - :message - The Proc called when a stream receives a message
+  - :error   - The Proc called when a stream receives an error (optional)
+  - :close   - The Proc called when a stream is closed (optional)
+
+### WebSocket Subscribe Topics
+
+Subscribe topics are in order as documented on the Cobinhood GitHub Page (linked above).
+
+#### User's balance updates [Auth]
+
+```ruby
+  client.user_updates params: {}, methods: methods
+```
+* required params: methods*
+
+#### Candle
+
+```ruby
+  client.candle trading_pair_id:, timeframe:, params: {}, methods:
+```
+* required params: trading_pair_id, timeframe, methods*
+
+#### Funding [Auth]
+
+```ruby
+  client.funding params: {}, methods:
+```
+* required params: methods*
+
+#### Matched loans
+
+```ruby
+  client.matched_loans currency_id:, params: {}, methods:
+```
+* required params: currency_id, methods*
+
+#### Loan Ticker
+
+```ruby
+  client.loan_ticker currency_id:, params: {}, methods:
+```
+* required params: currency_id, methods*
+
+#### User's loan updates [Auth]
+
+```ruby
+  client.user_loan_updates params: {}, methods:
+```
+* required params: methods*
+
+#### Order, Limit Order, Limit Stop Order, Market Order, Stop Order [Auth]
+
+```ruby
+  client.order type:, action:, params: {}, methods:
+```
+* required params: type, action, methods*
+
+#### Orderbook
+
+```ruby
+  client.orderbook trading_pair_id:, params: {}, methods:
+```
+* required params: trading_pair_id, methods*
+
+#### User's position updates [Auth]
+
+```ruby
+  client.user_position_updates params: {}, methods:
+```
+* required params: methods*
+
+#### Orderbook - repl
+
+```ruby
+  client.repl_orderbook trading_pair_id:, params: {}, methods:
+```
+* required params: trading_pair_id, methods*
+
+#### Ticker
+
+```ruby
+  client.ticker trading_pair_id:, params: {}, methods:
+```
+* required params: trading_pair_id, methods*
+
+#### Trade
+
+```ruby
+  client.trade trading_pair_id:, params: {}, methods:
+```
+* required params: trading_pair_id, methods*
 
 ## Development
 
