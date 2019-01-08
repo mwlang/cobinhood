@@ -139,11 +139,6 @@ where there would otherwise be name clashes/overloading.
 time
 ```
 * required params: none
-----
-```ruby
-info
-```
-* required params: none
 
 #### Market Endpoints
 ----
@@ -154,22 +149,40 @@ currencies
 * required params: none
 ----
 ```ruby
+funding_book_precisions currency_id
+```
+* alias: get_funding_book_precisions
+* required params: currency_id
+----
+```ruby
+funding_book currency_id, options={}
+```
+* alias: get_funding_book
+* required params: currency_id
+----
+```ruby
 trading_pairs
 ```
 * alias: get_all_trading_pairs
 * required params: none
 ----
 ```ruby
-order_book trading_pair_id
+order_book_precisions trading_pair_id
+```
+* alias: get_order_book_precisions
+* required params: trading_pair_id
+----
+```ruby
+order_book trading_pair_id, options={}
 ```
 * alias: get_order_book
 * required params: trading_pair_id
 ----
 ```ruby
-precisions trading_pair_id
+quote_currencies
 ```
-* alias: get_order_book_precisions
-* required params: trading_pair_id
+* alias: get_quote_currencies
+* required params: none
 ----
 ```ruby
 stats
@@ -177,16 +190,28 @@ stats
 * required params: none
 ----
 ```ruby
-tickers trading_pair_id
+tickers
+```
+* alias: get_tickers
+* required params: none
+----
+```ruby
+ticker trading_pair_id
 ```
 * alias: get_ticker
-* required params: none
+* required params: trading_pair_id
 ----
 ```ruby
 market_trades trading_pair_id
 ```
 * alias: get_recent_trades
-* required params: none
+* required params: trading_pair_id
+----
+```ruby
+market_trades_history trading_pair_id, options={}
+```
+* alias: get_trades_with_history
+* required params: trading_pair_id
 
 #### Chart Endpoints
 ----
@@ -196,6 +221,39 @@ candles trading_pair_id, options={}
 * required params: trading_pair_id, timeframe
 
 #### Trading Endpoints
+----
+```ruby
+check_order trading_pair_id, options={}
+```
+* alias: none
+* required params: trading_pair_id, stop_price, side, type
+----
+```ruby
+order_history trading_pair_id=nil, options={}
+```
+* alias: get_order_history
+* required params: none
+----
+```ruby
+place_order trading_pair_id, options={}
+  ```
+* required params: side, type, size, price (except market orders), stop_price (market and limit stop orders)
+----
+```ruby
+orders
+```
+* alias: get_all_orders
+* required params: none
+----
+```ruby
+modify_order order_id, options={}
+```
+* required params: order_id, size, price, stop_price (market and limit stop orders)
+----
+```ruby
+cancel_order order_id
+```
+* required params: order_id
 ----
 ```ruby
 order order_id
@@ -210,31 +268,39 @@ order_trades order_id
 * required params: order_id
 ----
 ```ruby
-orders
+positions
 ```
-* alias: get_all_orders
+* alias: get_all_open_positions
 * required params: none
 ----
 ```ruby
-place_order trading_pair_id, options={}
-  ```
-* required params: side, type, size, price (except market orders)
+claim_position trading_pair_id, options={}
+```
+* alias: none
+* required params: trading_pair_id
 ----
 ```ruby
-modify_order order_id, options={}
+position trading_pair_id
 ```
-* required params: order_id, size, price
+* alias: get_position
+* required params: trading_pair_id
 ----
 ```ruby
-cancel_order order_id
+close_position trading_pair_id
 ```
-* required params: order_id
+* alias: none
+* required params: trading_pair_id
 ----
 ```ruby
-order_history trading_pair_id=nil, options={}
+claimable_size trading_pair_id
 ```
-* alias: get_order_history
-* required params: none
+* alias: none
+* required params: trading_pair_id
+----
+```ruby
+trades trading_pair_id, options={}
+```
+* required params: trading_pair_id
 ----
 ```ruby
 get_trade trade_id
@@ -243,28 +309,113 @@ get_trade trade_id
 * required params: trade_id
 ----
 ```ruby
-trades trading_pair_id, options={}
+trading_volume currency_id, options={}
 ```
-* required params: trading_pair_id
+* alias: get_trading_volume
+* required params: currency_id
 
 #### Wallet Endpoints
 ----
 ```ruby
-balances
+balances options={}
 ```
 * alias: get_wallet_balances
 * required params: none
 ----
 ```ruby
-ledger
+ledger_in_csv begin_time
 ```
-* alias: get_ledger_entries
-* required params: none
+* alias: get_ledger_in_csv
+* required params: begin_time
 ----
 ```ruby
 deposit_addresses
 ```
 * alias: get_deposit_addresses
+* required params: none
+----
+```ruby
+create_deposit_address currency, options={}
+```
+* alias: none
+* required params: currency, ledger_type
+----
+```ruby
+iota_deposit_address
+```
+* alias: get_iota_deposit_address
+* required params: none
+----
+```ruby
+create_iota_deposit_address
+```
+* alias: none
+* required params: none
+----
+```ruby
+generic_deposits
+```
+* alias: get_all_generic_deposits
+* required params: none
+----
+```ruby
+generic_deposit generic_deposit_id
+```
+* alias: get_generic_deposit
+* required params: generic_deposit_id
+----
+```ruby
+generic_withdrawals
+```
+* alias: get_all_generic_withdrawals
+* required params: none
+----
+```ruby
+cancel_generic_withdrawal generic_withdrawal_id
+```
+* alias: none
+* required params: generic_withdrawal_id
+----
+```ruby
+generic_withdrawal generic_withdrawal_id
+```
+* alias: get_generic_withdrawal
+* required params: generic_withdrawal_id
+----
+```ruby
+ledger options={}
+```
+* alias: get_ledger_entries
+* required params: none
+----
+```ruby
+withdrawal_limit
+```
+* alias: get_withdrawal_limit
+* required params: none
+----
+```ruby
+transfer options={}
+```
+* alias: transfer_balance_between_wallets
+* required params: from, to, currency, amount
+----
+```ruby
+create_withdrawal_address options={}
+```
+* alias: add_withdrawal_wallet
+* required params: currency, currency, address
+----
+```ruby
+delete_withdrawal_address wallet_id
+```
+* alias: delete_withdrawal_wallet
+* required params: wallet_id
+----
+```ruby
+withdrawal_addresses
+```
+* alias: get_withdrawal_addresses
 * required params: none
 ----
 ```ruby
@@ -274,10 +425,10 @@ withdrawal_addresses
 * required params: none
 ----
 ```ruby
-withdrawal withdrawal_id
+withdrawal_frozen
 ```
-* alias: get_withdrawal
-* required params: withdrawal_id
+* alias: get_withdrawal_frozen_status
+* required params: none
 ----
 ```ruby
 withdrawals
@@ -286,16 +437,23 @@ withdrawals
 * required params: none
 ----
 ```ruby
-deposit deposit_id
+create_withdrawal options={}
 ```
-* alias: get_deposit
-* required params: deposit_id
+* alias: none
+* required params: currency, ledger_type, address
 ----
 ```ruby
-deposits
+withdrawal withdrawal_id
 ```
-* alias: get_all_deposits
-* required params: none
+* alias: get_withdrawal
+* required params: withdrawal_id
+----
+```ruby
+withdrawal_fee options={}
+```
+* alias: get_withdrawal_fee
+* required params: currency, ledger_type, memo, address
+----
 
 ### WebSocket Client
 

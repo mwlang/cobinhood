@@ -6,6 +6,7 @@ require_relative 'rest/auth_request_middleware'
 require_relative 'rest/system_api'
 require_relative 'rest/market_api'
 require_relative 'rest/chart_api'
+require_relative 'rest/funding_api'
 require_relative 'rest/trading_api'
 require_relative 'rest/wallet_api'
 
@@ -24,6 +25,7 @@ module Cobinhood
       include SystemAPI
       include MarketAPI
       include ChartAPI
+      include FundingAPI
       include TradingAPI
       include WalletAPI
 
@@ -39,6 +41,7 @@ module Cobinhood
             system: public_client(adapter),
             market: public_client(adapter),
              chart: public_client(adapter),
+           funding: auth_client(api_key, adapter),
            trading: auth_client(api_key, adapter),
             wallet: auth_client(api_key, adapter),
         }
@@ -93,8 +96,8 @@ module Cobinhood
           # substitute path parameters and remove from options hash
           endpoint_url = API_ENDPOINTS[api][endpoint].dup
           options.each do |option, value|
-            path_param = /":#{option}"/
-            if endpoint_url match? path_param
+            path_param = /:#{option}/
+            if endpoint_url.match? path_param
               options.delete(option)
               endpoint_url.gsub!(path_param, value)
             end
@@ -120,11 +123,15 @@ module Cobinhood
       private
 
       def success_or_error response
-        return response.body["result"] if response.body.is_a?(Hash) && response.body["success"]
-        json = JSON.parse(response.body)
-        raise Cobinhood::ClientError.new("Cobinhood Error: " + json["error"]["error_code"] + " for REQUEST ID: #{json["request_id"]}")
-      rescue
-        raise Cobinhood::ClientError.new("Cobinhood Error: " + response.body)
+        if response.body.is_a?(Hash)
+          return response.body["result"] if response.body["success"]
+          json = response.body
+        else
+          json = JSON.parse(response.body)
+        end
+        raise Cobinhood::ClientError.new("#{json["error"]["error_code"]} for REQUEST ID: #{json["request_id"]}")
+      rescue => e
+        raise Cobinhood::ClientError.new("#{e.message}\nresponse body : #{json})")
       end
 
       # TODO:  This needs more testing!  I'm not sure about precision of the epoche nor if
