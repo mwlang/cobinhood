@@ -9,7 +9,7 @@ module Cobinhood
           assert_required_param options, :type, ledger_types if options[:type]
           request :wallet, :get, :balances, options
         end
-        alias get_wallet_balances balances
+        alias get_balances balances
 
         def ledger_in_csv begin_time
           request :wallet, :get, :ledger_in_csv, begin_time: begin_time
@@ -25,6 +25,7 @@ module Cobinhood
           assert_required_param options, :ledger_type, ledger_types
           request :wallet, :post, :deposit_addresses, options.merge(currency: currency)
         end
+        alias create_new_deposit_address create_deposit_address
 
         def iota_deposit_address
           request :wallet, :get, :iota_deposit_addresses
@@ -35,8 +36,8 @@ module Cobinhood
           request :wallet, :post, :iota_deposit_addresses
         end
 
-        def generic_deposits
-          request :wallet, :get, :generic_deposits
+        def generic_deposits options={}
+          request :wallet, :get, :generic_deposits, options
         end
         alias get_all_generic_deposits generic_deposits
 
@@ -78,8 +79,8 @@ module Cobinhood
         end
         alias transfer_balance_between_wallets transfer
 
-        def withdrawal_addresses
-          request :wallet, :get, :withdrawal_addresses
+        def withdrawal_addresses options={}
+          request :wallet, :get, :withdrawal_addresses, options
         end
         alias get_withdrawal_addresses withdrawal_addresses
 
@@ -92,7 +93,7 @@ module Cobinhood
         alias add_withdrawal_wallet create_withdrawal_address
 
         def delete_withdrawal_address wallet_id
-          request :wallet, :delete, :withdrawal_addresses, wallet_id: wallet_id
+          request :wallet, :delete, :withdrawal_address, wallet_id: wallet_id
         end
         alias delete_withdrawal_wallet delete_withdrawal_address
 
@@ -110,7 +111,7 @@ module Cobinhood
           assert_required_param options, :currency
           assert_required_param options, :ledger_type, ledger_types
           assert_required_param options, :address
-          request :wallet, :post, :withdrawal, options
+          request :wallet, :post, :withdrawals, options
         end
 
         def withdrawal withdrawal_id

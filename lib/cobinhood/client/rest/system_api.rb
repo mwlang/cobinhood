@@ -9,6 +9,10 @@ module Cobinhood
         def localtime
           Time.at time["result"]["time"] / 1000.0
         end
+
+        def info
+          request :system, :get, :info
+        end
       end
     end
   end

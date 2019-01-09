@@ -60,7 +60,7 @@ module Cobinhood
         alias get_recent_trades market_trades
 
         def market_trades_history trading_pair_id, options={}
-          request :market, :get, :trades_history, trading_pair_id: trading_pair_id
+          request :market, :get, :trades_history, options.merge(trading_pair_id: trading_pair_id)
         end
         alias get_trades_with_history market_trades_history
       end

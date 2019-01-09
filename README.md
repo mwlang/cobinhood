@@ -133,12 +133,86 @@ names, aliases (if any) and parameters of the methods to access endpoints.  For 
 of the endpoint's URL and alias method follows the title/name given in Cobinhood API documentation.  There were some deviations
 where there would otherwise be name clashes/overloading.
 
-#### System Endpoints
+#### Chart Endpoints
 ----
 ```ruby
-time
+candles trading_pair_id, options={}
 ```
+* required params: trading_pair_id, timeframe
+
+#### Funding Endpoints
+----
+```ruby
+create_auto_offering options={}
+```
+* alias: setup_auto_offering
+* required params: currency, interest_rate, period, size
+----
+```ruby
+auto_offerings
+```
+* alias: get_all_active_auto_offerings
 * required params: none
+----
+```ruby
+disable_auto_offering currency_id
+```
+* alias: none
+* required params: currency_id
+----
+```ruby
+auto_offering currency_id
+```
+* alias: get_auto_offering
+* required params: currency_id
+----
+```ruby
+funding_history options={}
+```
+* alias: get_funding_orders_history
+* required params: none
+----
+```ruby
+create_funding options={}
+```
+* alias: place_funding_order
+* required params: currency, interest_rate, size, type, period, side
+----
+```ruby
+fundings options={}
+```
+* alias: get_open_funding_orders
+* required params: none
+----
+```ruby
+modify_funding funding_id, options={}
+```
+* alias: modify_funding_order
+* required params: funding_id, interest_rate, size
+----
+```ruby
+cancel_funding funding_id
+```
+* alias: cancel_funding_order
+* required params: funding_id
+----
+```ruby
+loans options={}
+```
+* alias: get_all_loans
+* required params: none
+----
+```ruby
+close_loan loan_id
+```
+* alias: none
+* required params: loan_id
+----
+```ruby
+loan loan_id
+```
+* alias: none
+* required params: loan_id
 
 #### Market Endpoints
 ----
@@ -213,36 +287,41 @@ market_trades_history trading_pair_id, options={}
 * alias: get_trades_with_history
 * required params: trading_pair_id
 
-#### Chart Endpoints
+#### System Endpoints
 ----
 ```ruby
-candles trading_pair_id, options={}
+time
 ```
-* required params: trading_pair_id, timeframe
+* required params: none
+----
+```ruby
+info
+```
+* required params: none
 
 #### Trading Endpoints
 ----
 ```ruby
-check_order trading_pair_id, options={}
+check_order options={}
 ```
 * alias: none
 * required params: trading_pair_id, stop_price, side, type
 ----
 ```ruby
-order_history trading_pair_id=nil, options={}
+order_history options={}
 ```
 * alias: get_order_history
 * required params: none
 ----
 ```ruby
-place_order trading_pair_id, options={}
+place_order options={}
   ```
-* required params: side, type, size, price (except market orders), stop_price (market and limit stop orders)
+* required params: trading_pair_id, side, type, size, price (except market orders), stop_price (market and limit stop orders)
 ----
 ```ruby
-orders
+orders options={}
 ```
-* alias: get_all_orders
+* alias: get_open_orders
 * required params: none
 ----
 ```ruby
@@ -298,9 +377,10 @@ claimable_size trading_pair_id
 * required params: trading_pair_id
 ----
 ```ruby
-trades trading_pair_id, options={}
+trades options={}
 ```
-* required params: trading_pair_id
+* alias: get_trade_history
+* required params: none
 ----
 ```ruby
 get_trade trade_id
@@ -319,7 +399,7 @@ trading_volume currency_id, options={}
 ```ruby
 balances options={}
 ```
-* alias: get_wallet_balances
+* alias: get_balances
 * required params: none
 ----
 ```ruby
@@ -337,7 +417,7 @@ deposit_addresses
 ```ruby
 create_deposit_address currency, options={}
 ```
-* alias: none
+* alias: create_new_deposit_address
 * required params: currency, ledger_type
 ----
 ```ruby
@@ -353,7 +433,7 @@ create_iota_deposit_address
 * required params: none
 ----
 ```ruby
-generic_deposits
+generic_deposits options={}
 ```
 * alias: get_all_generic_deposits
 * required params: none
@@ -401,6 +481,12 @@ transfer options={}
 * required params: from, to, currency, amount
 ----
 ```ruby
+withdrawal_addresses options={}
+```
+* alias: get_withdrawal_addresses
+* required params: none
+----
+```ruby
 create_withdrawal_address options={}
 ```
 * alias: add_withdrawal_wallet
@@ -411,18 +497,6 @@ delete_withdrawal_address wallet_id
 ```
 * alias: delete_withdrawal_wallet
 * required params: wallet_id
-----
-```ruby
-withdrawal_addresses
-```
-* alias: get_withdrawal_addresses
-* required params: none
-----
-```ruby
-withdrawal_addresses
-```
-* alias: get_withdrawal_addresses
-* required params: none
 ----
 ```ruby
 withdrawal_frozen

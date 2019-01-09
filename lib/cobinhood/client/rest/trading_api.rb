@@ -5,32 +5,33 @@ module Cobinhood
       # Public: A Module containing all of the Public API endpoints
       module TradingAPI
 
-        def check_order trading_pair_id, options={}
+        def check_order options={}
+          assert_required_param options, :trading_pair_id
           assert_required_param options, :stop_price
           assert_required_param options, :side, sides
           assert_required_param options, :type, check_order_types
-          request :trading, :post, :check_order, options.merge(trading_pair_id: trading_pair_id)
+          request :trading, :post, :check_order, options
         end
 
-        def order_history trading_pair_id=nil, options={}
-          options.merge!(trading_pair_id: trading_pair_id) unless trading_pair_id.nil?
+        def order_history options={}
           request :trading, :get, :order_history, options
         end
         alias get_order_history order_history
 
-        def place_order trading_pair_id, options={}
+        def place_order options={}
+          assert_required_param options, :trading_pair_id
           assert_required_param options, :price unless market_order?(options)
           assert_required_param options, :stop_price if market_stop_order?(options)
           assert_required_param options, :type, order_types
           assert_required_param options, :side, sides
           assert_required_param options, :size
-          request :trading, :post, :orders, options.merge(trading_pair_id: trading_pair_id)
+          request :trading, :post, :orders, options
         end
 
-        def orders
-          request :trading, :get, :orders
+        def orders options={}
+          request :trading, :get, :orders, options
         end
-        alias get_all_orders orders
+        alias get_open_orders orders
 
         def modify_order order_id, options={}
           assert_required_param options, :size
@@ -76,12 +77,13 @@ module Cobinhood
         end
         alias get_claimable_size claimable_size
 
-        def trades trading_pair_id, options={}
-          request :trading, :get, :trades, options.merge(trading_pair_id: trading_pair_id)
+        def trades options={}
+          request :trading, :get, :trades, options
         end
+        alias get_trade_history trades
 
         def get_trade trade_id
-          request :trading, :get, :get_trade, options.merge(trade_id: trade_id)
+          request :trading, :get, :get_trade, trade_id: trade_id
         end
         alias trade get_trade
 

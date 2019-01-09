@@ -4,7 +4,8 @@ module Cobinhood
     class REST
       API_ENDPOINTS = {
         system: {
-          time: 'v1/system/time'
+          time:           'v1/system/time',
+          info:           'v1/system/info',
         },
 
         market: {
@@ -59,6 +60,16 @@ module Cobinhood
           withdrawal:             '/v1/wallet/withdrawals/:withdrawal_id',
           withdrawal_fee:         '/v1/wallet/withdrawals/fee',
         },
+
+        funding: {
+          auto_offerings:  '/v1/funding/auto_offerings',
+          auto_offering:   '/v1/funding/auto_offerings/:currency_id',
+          funding_history: '/v1/funding/funding_history',
+          fundings:        '/v1/funding/fundings',
+          funding:         '/v1/funding/fundings/:funding_id',
+          loans:           '/v1/funding/loans',
+          loan:            '/v1/funding/loans/:loan_id',
+        }
       }.freeze
     end
   end
